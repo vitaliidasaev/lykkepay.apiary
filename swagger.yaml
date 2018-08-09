@@ -2,7 +2,44 @@ swagger: '2.0'
 info:
   version: v1
   title: PayAPI
-  description: "LykkePay public API to provide customers the out-of-the-box functionality for their \nclients to make payments in BTC, ETH and other assets depending on customer needs.\n\n# Allowed HTTPs requests:\n- **POST** : To create resource \r\n- **PUT** : To update resource\r\n- **GET** : To get a resource or list of resources\r\n- **DELETE** : To delete resource\r\n\r\n# Description Of Usual Server Responses:\r\n- 200 `OK` - the request was successful (some API calls may return 201 instead).\r\n- 201 `Created` - the request was successful and a resource was created.\r\n- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).\r\n- 400 `Bad Request` - the request could not be understood or was missing required parameters.\r\n- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.\r\n- 403 `Forbidden` - access denied.\r\n- 404 `Not Found` - resource was not found."
+  description: >-
+    **Lykke PayAPI** is the set of API methods aimed to provide customers the
+    out-of-the-box functionality for their 
+
+    clients to make payments in BTC, ETH and other assets depending on customer
+    needs.
+
+
+    #### Allowed HTTPs requests:
+
+    - **POST** : To create resource 
+
+    - **PUT** : To update resource
+
+    - **GET** : To get a resource or list of resources
+
+    - **DELETE** : To delete resource
+
+
+    #### Description Of Usual Server Responses:
+
+    - 200 `OK` - the request was successful (some API calls may return 201
+    instead).
+
+    - 201 `Created` - the request was successful and a resource was created.
+
+    - 204 `No Content` - the request was successful but there is no
+    representation to return (i.e. the response is empty).
+
+    - 400 `Bad Request` - the request could not be understood or was missing
+    required parameters.
+
+    - 401 `Unauthorized` - authentication failed or user doesn't have
+    permissions for requested operation.
+
+    - 403 `Forbidden` - access denied.
+
+    - 404 `Not Found` - resource was not found.
 host: pay-api-test.lykkex.net
 basePath: /
 paths:
@@ -11,7 +48,7 @@ paths:
       tags:
         - Assets
       summary: Get settlement assets
-      description: Return list of settlement assets available for merchant
+      description: "Receive list of settlement assets available for merchant.\r\nExample:\r\n[ \"Asset1\", \"Asset2\", \"Asset3\" ]"
       operationId: GetSettlementAssets
       consumes: []
       produces:
@@ -32,13 +69,17 @@ paths:
           description: List of settlement assets
           schema:
             $ref: '#/definitions/AssetsResponseModel'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Settlement assets
   '/api/v1/assets/payment/{settlementAssetId}':
     get:
       tags:
         - Assets
-      summary: Returns list of payment assets available for merchant
+      summary: Get payment assets
+      description: Receive list of payment assets available for merchant
       operationId: GetPaymentAssets
       consumes: []
       produces:
@@ -64,13 +105,17 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/AssetsResponseModel'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Payment assets
   /api/v1/mobile/assets/cashout:
     get:
       tags:
         - Assets
-      summary: Returns list of available assets for bank cash out
+      summary: Get cashout assets
+      description: Receive list of available assets for bank cash out.
       operationId: GetCashoutAssets
       consumes: []
       produces:
@@ -85,14 +130,19 @@ paths:
         '200':
           description: List of asset names
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/CashoutAssetResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Cashout assets
   /api/v1/mobile/cashout:
     post:
       tags:
         - Cashout
-      summary: Executes cashout request
+      summary: Execute cashout
+      description: Execute cashout request for current merchant.
       operationId: Execute
       consumes:
         - application/json-patch+json
@@ -122,11 +172,15 @@ paths:
           description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Execute cashout
   '/api/v1/mobile/exchange/GetRate/{baseAssetId}/{quotingAssetId}':
     get:
       tags:
         - Exchange
-      summary: Returns current exchange rate for the asset pair
+      summary: Get exchange rate
+      description: Receive current exchange rate for the asset pair.
       operationId: GetRate
       consumes: []
       produces:
@@ -156,15 +210,19 @@ paths:
           description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Exchange rate
   /api/v1/mobile/exchange/Execute:
     post:
       tags:
         - Exchange
-      summary: Executes exchange operation
+      summary: Execute exchange
+      description: Execute exchange operation for current merchant.
       operationId: Execute
       consumes:
         - application/json-patch+json
@@ -194,11 +252,15 @@ paths:
           description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Execute exchange
   /api/v1/mobile/exchange/PreExchange:
     post:
       tags:
         - Exchange
-      summary: Returns current exchange rate
+      summary: Check preexchange
+      description: Check whether exchange is possible.
       operationId: PreExchange
       consumes:
         - application/json-patch+json
@@ -228,11 +290,15 @@ paths:
           description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: PreExchange
   /api/v1/mobile/history/Index:
     get:
       tags:
         - History
-      summary: Returns list of history operations.
+      summary: Get history
+      description: Receive list of history operations.
       operationId: History
       consumes: []
       produces:
@@ -247,6 +313,7 @@ paths:
         '200':
           description: A collection of history operations.
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/HistoryOperationViewModel'
@@ -254,11 +321,15 @@ paths:
           description: Problem occured.
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: History
   /api/v1/mobile/history/Details:
     get:
       tags:
         - History
-      summary: Returns details of the history operation.
+      summary: Get history details
+      description: Receive details of the history operation.
       operationId: HistoryDetails
       consumes: []
       produces:
@@ -266,7 +337,7 @@ paths:
       parameters:
         - name: id
           in: query
-          required: false
+          required: true
           type: string
         - name: Authorization
           in: header
@@ -282,13 +353,17 @@ paths:
           description: Problem occured.
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: History operation is not found.
+      x-summary: History details
   /api/v1/mobile/history/InvoiceLatestPaymentDetails:
     get:
       tags:
         - History
-      summary: Returns latest payment details of the history operation.
+      summary: Get latest payment details
+      description: Receive latest payment details of the history operation.
       operationId: InvoiceLatestPaymentDetails
       consumes: []
       produces:
@@ -296,7 +371,7 @@ paths:
       parameters:
         - name: invoiceId
           in: query
-          required: false
+          required: true
           type: string
         - name: Authorization
           in: header
@@ -308,13 +383,17 @@ paths:
           description: A details of the history operation.
           schema:
             $ref: '#/definitions/HistoryOperationModel'
+        '401':
+          description: Unauthorized
         '404':
           description: History operation is not found.
+      x-summary: Latest payment details
   /api/v1/mobile/invoices/mine:
     get:
       tags:
         - Invoices
-      summary: Returns invoices by filter
+      summary: Get my invoices
+      description: Receive the invoices by filter which were created by me.
       operationId: InvoicesGetMineByFilter
       consumes: []
       produces:
@@ -330,6 +409,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: statuses
           in: query
           description: The statuses (e.g. ?statuses=one&amp;statuses=two)
@@ -338,6 +418,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: dispute
           in: query
           description: The dispute attribute
@@ -353,6 +434,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: settlementAssets
           in: query
           description: >-
@@ -363,6 +445,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: greaterThan
           in: query
           description: The greater than number for filtering (can be fractional)
@@ -384,6 +467,7 @@ paths:
         '200':
           description: A collection of invoices.
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/InvoiceResponseModel'
@@ -391,18 +475,21 @@ paths:
           description: Problem occured.
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
         '500':
           description: Server Error
+      x-summary: My invoices
   /api/v1/mobile/invoices/inbox:
     get:
       tags:
         - Invoices
       summary: Get incoming invoices
-      description: Return the invoices by filter which should be paid by me.
+      description: Receive the invoices by filter which should be paid by me.
       operationId: InvoicesGetInboxByFilter
       consumes: []
       produces:
@@ -418,6 +505,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: statuses
           in: query
           description: '[Optional] The statuses (e.g. ?statuses=one&amp;statuses=two)'
@@ -426,6 +514,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: dispute
           in: query
           description: '[Optional] The dispute attribute'
@@ -441,6 +530,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: settlementAssets
           in: query
           description: >-
@@ -451,6 +541,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: greaterThan
           in: query
           description: '[Optional] The greater than number for filtering (can be fractional)'
@@ -472,6 +563,7 @@ paths:
         '200':
           description: A collection of invoices.
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/InvoiceResponseModel'
@@ -479,17 +571,21 @@ paths:
           description: Problem occured.
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
         '500':
           description: Server Error
+      x-summary: Incoming invoices
   /api/v1/mobile/invoices/filter:
     get:
       tags:
         - Invoices
-      summary: Get filter for current merchant
+      summary: Get filter
+      description: Get filter for current merchant.
       operationId: GetFilterForCurrentMerchant
       consumes: []
       produces:
@@ -509,12 +605,15 @@ paths:
           description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
         '500':
           description: Server Error
+      x-summary: Filter
   /api/v1/mobile/invoices/dispute/mark:
     post:
       tags:
@@ -547,10 +646,13 @@ paths:
           description: Invalid model
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Mark dispute
   /api/v1/mobile/invoices/dispute/cancel:
     post:
       tags:
@@ -583,15 +685,19 @@ paths:
           description: Invalid model
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Cancel dispute
   /api/v1/mobile/invoices/dispute/list:
     get:
       tags:
         - Invoices
-      summary: Get list of my invoices which are marked as Dispute
+      summary: Get dispute invoices
+      description: Get list of my invoices which are marked as Dispute.
       operationId: GetMyInvoicesMarkedDispute
       consumes: []
       produces:
@@ -609,15 +715,19 @@ paths:
           description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Dispute invoices
   /api/v1/mobile/invoices/pay:
     post:
       tags:
         - Invoices
-      summary: Pay one or multiple invoices with certain amount
+      summary: Pay invoices
+      description: Pay one or multiple invoices with certain amount.
       operationId: PayInvoices
       consumes:
         - application/json-patch+json
@@ -639,21 +749,23 @@ paths:
           required: true
           type: string
       responses:
-        '200':
-          description: Accepted for further processing
         '202':
-          description: Success
+          description: Accepted for further processing
           schema:
             type: boolean
         '400':
           description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Pay invoices
   /api/v1/mobile/invoices/sum:
     get:
       tags:
         - Invoices
-      summary: Get sum for paying invoices
+      summary: Get sum
+      description: Get sum for paying invoices
       operationId: GetSumToPayInvoices
       consumes: []
       produces:
@@ -667,6 +779,7 @@ paths:
           items:
             type: string
           collectionFormat: multi
+          uniqueItems: false
         - name: Authorization
           in: header
           description: access token
@@ -681,16 +794,19 @@ paths:
           description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Sum to pay
   /api/isAlive:
     get:
       tags:
         - IsAlive
       summary: Checks service is alive
-      description: Return the liveness status of the service
+      description: Receive the liveness status of the service.
       operationId: IsAlive
       consumes: []
       produces:
@@ -711,11 +827,13 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Is alive
   /api/v1/mobile/billing/availableMerchants:
     get:
       tags:
         - Merchants
-      summary: Returns list of merchants available to be billed
+      summary: Get list of merchants
+      description: Receive list of merchants available to be billed.
       operationId: GetAvailableMerchantsForBilling
       consumes: []
       produces:
@@ -731,14 +849,19 @@ paths:
           description: List of merchants
           schema:
             $ref: '#/definitions/AvailableMerchantsForBillingResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Available merchants
   /api/v1/mobile/user:
     get:
       tags:
         - Merchants
+      summary: Get current user info
+      description: Receive information about current user (employee of the merchant).
       operationId: GetCurrentUserInfo
       consumes: []
       produces:
@@ -751,18 +874,22 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: User information
           schema:
             $ref: '#/definitions/CurrentUserInfoResponse'
+        '401':
+          description: Unauthorized
         '404':
-          description: Not Found
+          description: Employee not found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: User info
   /api/v1/mobile/baseAsset/list:
     get:
       tags:
         - Merchants
-      summary: Get base asset
+      summary: Get base asset list
+      description: Receive assets which can be set as base asset.
       operationId: GetBaseAssetList
       consumes: []
       produces:
@@ -777,6 +904,7 @@ paths:
         '200':
           description: Base asset
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/BaseAssetItemModel'
@@ -784,15 +912,19 @@ paths:
           description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Assets not found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Base asset list
   /api/v1/mobile/baseAsset:
     post:
       tags:
         - Merchants
-      summary: Get base asset
+      summary: Set base asset
+      description: Set base asset for current merchant
       operationId: SetBaseAsset
       consumes: []
       produces:
@@ -811,6 +943,7 @@ paths:
         '200':
           description: Base asset
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/BaseAssetItemModel'
@@ -818,17 +951,21 @@ paths:
           description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Assets not found
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Set base asset
   /api/v1/mobile/merchantWallets:
     get:
       tags:
         - MerchantWallets
-      summary: >-
-        Returns merchant wallets with balances in base asset and converted to
-        given asset
+      summary: Get balances
+      description: >-
+        Receive merchant wallets with balances in base asset and converted to
+        given asset.
       operationId: GetMerchantWalletConvertedBalances
       consumes: []
       produces:
@@ -848,9 +985,12 @@ paths:
         '200':
           description: List of merchant wallet balances
           schema:
+            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/MerchantWalletConvertedBalanceResponse'
+        '401':
+          description: Unauthorized
         '404':
           description: Merchant not found
           schema:
@@ -863,11 +1003,12 @@ paths:
           description: Internal service request error
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Balances
   /api/v1/paymentRequest:
     post:
       tags:
         - PaymentRequest
-      summary: Creates payment request and order
+      summary: Create payment request and order
       operationId: CreatePaymentRequest
       consumes:
         - application/json-patch+json
@@ -879,7 +1020,7 @@ paths:
       parameters:
         - name: request
           in: body
-          description: ''
+          description: Request model
           required: false
           schema:
             $ref: '#/definitions/CreatePaymentRequestModel'
@@ -895,20 +1036,24 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
           schema:
             $ref: '#/definitions/PaymentStatusResponseModel'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/PaymentErrorResponseModel'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Create
   '/api/v1/paymentRequest/{paymentRequestId}/status':
     get:
       tags:
         - PaymentRequest
-      summary: Returns status of a payment request
+      summary: Get status
+      description: Receive status of a payment request.
       operationId: GetPaymentRequestStatus
       consumes: []
       produces:
@@ -916,7 +1061,7 @@ paths:
       parameters:
         - name: paymentRequestId
           in: path
-          description: ''
+          description: Payment request id
           required: true
           type: string
         - name: Lykke-Merchant-Id
@@ -931,20 +1076,23 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
           schema:
             $ref: '#/definitions/PaymentStatusResponseModel'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/PaymentErrorResponseModel'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Status
   '/api/v1/paymentRequest/{paymentRequestId}/refund':
     post:
       tags:
         - PaymentRequest
-      summary: Initiates a refund on a payment
+      summary: Initiate a refund on a payment
       operationId: Refund
       consumes: []
       produces:
@@ -952,12 +1100,12 @@ paths:
       parameters:
         - name: paymentRequestId
           in: path
-          description: ''
+          description: Payment request id
           required: true
           type: string
         - name: destinationAddress
           in: query
-          description: ''
+          description: Destination address
           required: false
           type: string
         - name: Lykke-Merchant-Id
@@ -972,17 +1120,22 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
           schema:
             $ref: '#/definitions/PaymentStatusResponseModel'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/PaymentErrorResponseModel'
+        '401':
+          description: Unauthorized
+      x-summary: Refund
   '/api/v1/paymentRequest/{paymentRequestId}/callback':
     get:
       tags:
         - PaymentRequest
+      summary: Get callback url
+      description: Receive payment request callback url.s
       operationId: GetCallback
       consumes: []
       produces:
@@ -990,6 +1143,7 @@ paths:
       parameters:
         - name: paymentRequestId
           in: path
+          description: Payment request id
           required: true
           type: string
         - name: Lykke-Merchant-Id
@@ -1004,19 +1158,23 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
           schema:
             $ref: '#/definitions/GetPaymentCallbackResponseModel'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/PaymentErrorResponseModel'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Get callback
     post:
       tags:
         - PaymentRequest
-      summary: Adds or updates payment request callback url
+      summary: Set callback url
+      description: Add or update payment request callback url.
       operationId: SetCallback
       consumes: []
       produces:
@@ -1024,12 +1182,12 @@ paths:
       parameters:
         - name: paymentRequestId
           in: path
-          description: ''
+          description: Payment request id
           required: true
           type: string
         - name: callbackUrl
           in: query
-          description: ''
+          description: Callback url
           required: false
           type: string
         - name: Lykke-Merchant-Id
@@ -1044,18 +1202,21 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/PaymentErrorResponseModel'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Set callback
   '/api/v1/rates/{assetPairId}':
     get:
       tags:
         - Rates
-      summary: Get asset pair rates
+      summary: Get asset pair rate
       operationId: GetAssetPairRates
       consumes: []
       produces:
@@ -1063,7 +1224,7 @@ paths:
       parameters:
         - name: assetPairId
           in: path
-          description: Asset pair identifier.
+          description: Asset pair id
           required: true
           type: string
         - name: Lykke-Merchant-Id
@@ -1078,20 +1239,23 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
           schema:
             $ref: '#/definitions/AssetPairResponseModel'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
+      x-summary: Asset pair rate
   /api/v1/mobile/auth:
     post:
       tags:
         - Security
-      summary: Authenticates user
+      summary: Authenticate user
       operationId: Auth
       consumes:
         - application/json-patch+json
@@ -1116,11 +1280,12 @@ paths:
           description: Invalid email or password
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Authenticate
   /api/v1/mobile/password:
     post:
       tags:
         - Security
-      summary: Updates user password
+      summary: Update password
       operationId: UpdatePassword
       consumes:
         - application/json-patch+json
@@ -1150,11 +1315,14 @@ paths:
             password
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Update password
   /api/v1/mobile/pin:
     post:
       tags:
         - Security
-      summary: Updates pin code
+      summary: Update pin
       operationId: UpdatePin
       consumes:
         - application/json-patch+json
@@ -1182,11 +1350,15 @@ paths:
           description: Email is invalid or there is no credentials
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Update pin
   /api/v1/mobile/pin/validation:
     post:
       tags:
         - Security
-      summary: Checks if pin is valid
+      summary: Validate pin
+      description: Check if pin code is valid
       operationId: ValidatePin
       consumes:
         - application/json-patch+json
@@ -1216,10 +1388,14 @@ paths:
           description: Email is invalid
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+      x-summary: Validate pin
   /api/v1/wooCommerce/create:
     post:
       tags:
         - WooCommerce
+      summary: Create invoice
       operationId: Create
       consumes: []
       produces:
@@ -1239,7 +1415,7 @@ paths:
           type: string
         - name: Amount
           in: query
-          required: true
+          required: false
           type: number
           format: double
         - name: Currency
@@ -1278,19 +1454,25 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
+          schema:
+            $ref: '#/definitions/WooCommerceResponse'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Create invoice
   /api/v1/wooCommerce/status:
     post:
       tags:
         - WooCommerce
+      summary: Get invoice status
       operationId: Status
       consumes: []
       produces:
@@ -1310,7 +1492,7 @@ paths:
           type: string
         - name: Amount
           in: query
-          required: true
+          required: false
           type: number
           format: double
         - name: Currency
@@ -1349,15 +1531,20 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: Result model
+          schema:
+            $ref: '#/definitions/WooCommerceResponse'
         '400':
-          description: Bad Request
+          description: Problem occured
           schema:
             $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
         '500':
           description: Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+      x-summary: Invoice status
 definitions:
   AssetsResponseModel:
     required:
@@ -1365,6 +1552,7 @@ definitions:
     type: object
     properties:
       assets:
+        uniqueItems: false
         type: array
         items:
           type: string
@@ -1424,6 +1612,7 @@ definitions:
       modelErrors:
         type: object
         additionalProperties:
+          uniqueItems: false
           type: array
           items:
             type: string
@@ -1733,14 +1922,17 @@ definitions:
     type: object
     properties:
       groupMerchants:
+        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/MerchantFilterItemModel'
       billingCategories:
+        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/FilterItemModel'
       settlementAssets:
+        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/FilterItemModel'
@@ -1796,6 +1988,7 @@ definitions:
     properties:
       invoicesIds:
         description: Invoices identifiers
+        uniqueItems: false
         type: array
         items:
           type: string
@@ -1829,6 +2022,7 @@ definitions:
       isDebug:
         type: boolean
       issueIndicators:
+        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/IssueIndicator'
@@ -1850,6 +2044,7 @@ definitions:
     properties:
       merchants:
         description: Gets or sets merchant list
+        uniqueItems: false
         type: array
         items:
           type: string
@@ -2004,6 +2199,7 @@ definitions:
       expiration_datetime:
         type: string
       transactions:
+        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/PaymentResponseTransactionModel'
@@ -2026,6 +2222,7 @@ definitions:
       expiration_datetime:
         type: string
       transactions:
+        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/RefundResponseTransactionModel'
@@ -2167,6 +2364,7 @@ definitions:
         description: Tags for push notifications.
         type: object
         additionalProperties:
+          uniqueItems: false
           type: array
           items:
             type: string
@@ -2213,7 +2411,27 @@ definitions:
         description: Tags for push notifications.
         type: object
         additionalProperties:
+          uniqueItems: false
           type: array
           items:
             type: string
-securityDefinitions: {}
+  WooCommerceResponse:
+    required:
+      - invoiceURL
+      - errorCode
+      - message
+      - status
+      - invoiceId
+    type: object
+    properties:
+      invoiceURL:
+        type: string
+      errorCode:
+        type: string
+      message:
+        type: string
+      status:
+        type: string
+      invoiceId:
+        type: string
+tags: []
