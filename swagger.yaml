@@ -41,7 +41,6 @@ info:
 
     - 404 `Not Found` - resource was not found.
 host: pay-api-test.lykkex.net
-basePath: /
 paths:
   /api/v1/assets/settlement:
     get:
@@ -73,7 +72,7 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Settlement assets
+    x-summary: Settlement assets
   '/api/v1/assets/payment/{settlementAssetId}':
     get:
       tags:
@@ -109,7 +108,7 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Payment assets
+    x-summary: Payment assets
   /api/v1/mobile/assets/cashout:
     get:
       tags:
@@ -130,13 +129,12 @@ paths:
         '200':
           description: List of asset names
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/CashoutAssetResponse'
         '401':
           description: Unauthorized
-      x-summary: Cashout assets
+    x-summary: Cashout assets
   /api/v1/mobile/cashout:
     post:
       tags:
@@ -174,7 +172,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: Execute cashout
+    x-summary: Execute cashout
   '/api/v1/mobile/exchange/GetRate/{baseAssetId}/{quotingAssetId}':
     get:
       tags:
@@ -216,7 +214,7 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Exchange rate
+    x-summary: Exchange rate
   /api/v1/mobile/exchange/Execute:
     post:
       tags:
@@ -254,7 +252,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: Execute exchange
+    x-summary: Execute exchange
   /api/v1/mobile/exchange/PreExchange:
     post:
       tags:
@@ -292,7 +290,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: PreExchange
+    x-summary: PreExchange
   /api/v1/mobile/history/Index:
     get:
       tags:
@@ -313,7 +311,6 @@ paths:
         '200':
           description: A collection of history operations.
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/HistoryOperationViewModel'
@@ -323,7 +320,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: History
+    x-summary: History
   /api/v1/mobile/history/Details:
     get:
       tags:
@@ -337,7 +334,7 @@ paths:
       parameters:
         - name: id
           in: query
-          required: true
+          required: false
           type: string
         - name: Authorization
           in: header
@@ -357,7 +354,7 @@ paths:
           description: Unauthorized
         '404':
           description: History operation is not found.
-      x-summary: History details
+    x-summary: History details
   /api/v1/mobile/history/InvoiceLatestPaymentDetails:
     get:
       tags:
@@ -371,7 +368,7 @@ paths:
       parameters:
         - name: invoiceId
           in: query
-          required: true
+          required: false
           type: string
         - name: Authorization
           in: header
@@ -387,7 +384,7 @@ paths:
           description: Unauthorized
         '404':
           description: History operation is not found.
-      x-summary: Latest payment details
+    x-summary: Latest payment details
   /api/v1/mobile/invoices/mine:
     get:
       tags:
@@ -409,7 +406,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: statuses
           in: query
           description: The statuses (e.g. ?statuses=one&amp;statuses=two)
@@ -418,7 +414,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: dispute
           in: query
           description: The dispute attribute
@@ -434,7 +429,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: settlementAssets
           in: query
           description: >-
@@ -445,7 +439,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: greaterThan
           in: query
           description: The greater than number for filtering (can be fractional)
@@ -467,7 +460,6 @@ paths:
         '200':
           description: A collection of invoices.
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/InvoiceResponseModel'
@@ -483,7 +475,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '500':
           description: Server Error
-      x-summary: My invoices
+    x-summary: My invoices
   /api/v1/mobile/invoices/inbox:
     get:
       tags:
@@ -505,7 +497,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: statuses
           in: query
           description: '[Optional] The statuses (e.g. ?statuses=one&amp;statuses=two)'
@@ -514,7 +505,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: dispute
           in: query
           description: '[Optional] The dispute attribute'
@@ -530,7 +520,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: settlementAssets
           in: query
           description: >-
@@ -541,7 +530,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: greaterThan
           in: query
           description: '[Optional] The greater than number for filtering (can be fractional)'
@@ -563,7 +551,6 @@ paths:
         '200':
           description: A collection of invoices.
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/InvoiceResponseModel'
@@ -579,7 +566,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '500':
           description: Server Error
-      x-summary: Incoming invoices
+    x-summary: Incoming invoices
   /api/v1/mobile/invoices/filter:
     get:
       tags:
@@ -613,7 +600,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '500':
           description: Server Error
-      x-summary: Filter
+    x-summary: Filter
   /api/v1/mobile/invoices/dispute/mark:
     post:
       tags:
@@ -652,7 +639,7 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Mark dispute
+    x-summary: Mark dispute
   /api/v1/mobile/invoices/dispute/cancel:
     post:
       tags:
@@ -691,7 +678,7 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Cancel dispute
+    x-summary: Cancel dispute
   /api/v1/mobile/invoices/dispute/list:
     get:
       tags:
@@ -721,7 +708,7 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Dispute invoices
+    x-summary: Dispute invoices
   /api/v1/mobile/invoices/pay:
     post:
       tags:
@@ -759,7 +746,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: Pay invoices
+    x-summary: Pay invoices
   /api/v1/mobile/invoices/sum:
     get:
       tags:
@@ -779,7 +766,6 @@ paths:
           items:
             type: string
           collectionFormat: multi
-          uniqueItems: false
         - name: Authorization
           in: header
           description: access token
@@ -800,7 +786,7 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Sum to pay
+    x-summary: Sum to pay
   /api/isAlive:
     get:
       tags:
@@ -827,7 +813,7 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Is alive
+    x-summary: Is alive
   /api/v1/mobile/billing/availableMerchants:
     get:
       tags:
@@ -855,7 +841,7 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Available merchants
+    x-summary: Available merchants
   /api/v1/mobile/user:
     get:
       tags:
@@ -883,7 +869,7 @@ paths:
           description: Employee not found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: User info
+    x-summary: User info
   /api/v1/mobile/baseAsset/list:
     get:
       tags:
@@ -904,7 +890,6 @@ paths:
         '200':
           description: Base asset
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/BaseAssetItemModel'
@@ -918,7 +903,7 @@ paths:
           description: Assets not found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Base asset list
+    x-summary: Base asset list
   /api/v1/mobile/baseAsset:
     post:
       tags:
@@ -943,7 +928,6 @@ paths:
         '200':
           description: Base asset
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/BaseAssetItemModel'
@@ -957,7 +941,7 @@ paths:
           description: Assets not found
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Set base asset
+    x-summary: Set base asset
   /api/v1/mobile/merchantWallets:
     get:
       tags:
@@ -985,7 +969,6 @@ paths:
         '200':
           description: List of merchant wallet balances
           schema:
-            uniqueItems: false
             type: array
             items:
               $ref: '#/definitions/MerchantWalletConvertedBalanceResponse'
@@ -1003,7 +986,7 @@ paths:
           description: Internal service request error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Balances
+    x-summary: Balances
   /api/v1/paymentRequest:
     post:
       tags:
@@ -1047,7 +1030,7 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Create
+    x-summary: Create
   '/api/v1/paymentRequest/{paymentRequestId}/status':
     get:
       tags:
@@ -1087,7 +1070,7 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Status
+    x-summary: Status
   '/api/v1/paymentRequest/{paymentRequestId}/refund':
     post:
       tags:
@@ -1129,7 +1112,7 @@ paths:
             $ref: '#/definitions/PaymentErrorResponseModel'
         '401':
           description: Unauthorized
-      x-summary: Refund
+    x-summary: Refund
   '/api/v1/paymentRequest/{paymentRequestId}/callback':
     get:
       tags:
@@ -1169,7 +1152,6 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Get callback
     post:
       tags:
         - PaymentRequest
@@ -1211,7 +1193,7 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Set callback
+    x-summary: Callback
   '/api/v1/rates/{assetPairId}':
     get:
       tags:
@@ -1250,7 +1232,7 @@ paths:
           description: Unauthorized
         '500':
           description: Server Error
-      x-summary: Asset pair rate
+    x-summary: Asset pair rate
   /api/v1/mobile/auth:
     post:
       tags:
@@ -1280,7 +1262,7 @@ paths:
           description: Invalid email or password
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Authenticate
+    x-summary: Authenticate
   /api/v1/mobile/password:
     post:
       tags:
@@ -1317,7 +1299,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: Update password
+    x-summary: Update password
   /api/v1/mobile/pin:
     post:
       tags:
@@ -1352,7 +1334,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: Update pin
+    x-summary: Update pin
   /api/v1/mobile/pin/validation:
     post:
       tags:
@@ -1390,7 +1372,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-      x-summary: Validate pin
+    x-summary: Validate pin
   /api/v1/wooCommerce/create:
     post:
       tags:
@@ -1415,7 +1397,7 @@ paths:
           type: string
         - name: Amount
           in: query
-          required: false
+          required: true
           type: number
           format: double
         - name: Currency
@@ -1467,7 +1449,7 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Create invoice
+    x-summary: Create invoice
   /api/v1/wooCommerce/status:
     post:
       tags:
@@ -1492,7 +1474,7 @@ paths:
           type: string
         - name: Amount
           in: query
-          required: false
+          required: true
           type: number
           format: double
         - name: Currency
@@ -1544,7 +1526,7 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-summary: Invoice status
+    x-summary: Invoice status
 definitions:
   AssetsResponseModel:
     required:
@@ -1552,7 +1534,6 @@ definitions:
     type: object
     properties:
       assets:
-        uniqueItems: false
         type: array
         items:
           type: string
@@ -1612,7 +1593,6 @@ definitions:
       modelErrors:
         type: object
         additionalProperties:
-          uniqueItems: false
           type: array
           items:
             type: string
@@ -1922,17 +1902,14 @@ definitions:
     type: object
     properties:
       groupMerchants:
-        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/MerchantFilterItemModel'
       billingCategories:
-        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/FilterItemModel'
       settlementAssets:
-        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/FilterItemModel'
@@ -1988,7 +1965,6 @@ definitions:
     properties:
       invoicesIds:
         description: Invoices identifiers
-        uniqueItems: false
         type: array
         items:
           type: string
@@ -2022,7 +1998,6 @@ definitions:
       isDebug:
         type: boolean
       issueIndicators:
-        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/IssueIndicator'
@@ -2044,7 +2019,6 @@ definitions:
     properties:
       merchants:
         description: Gets or sets merchant list
-        uniqueItems: false
         type: array
         items:
           type: string
@@ -2199,7 +2173,6 @@ definitions:
       expiration_datetime:
         type: string
       transactions:
-        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/PaymentResponseTransactionModel'
@@ -2222,7 +2195,6 @@ definitions:
       expiration_datetime:
         type: string
       transactions:
-        uniqueItems: false
         type: array
         items:
           $ref: '#/definitions/RefundResponseTransactionModel'
@@ -2364,7 +2336,6 @@ definitions:
         description: Tags for push notifications.
         type: object
         additionalProperties:
-          uniqueItems: false
           type: array
           items:
             type: string
@@ -2411,7 +2382,6 @@ definitions:
         description: Tags for push notifications.
         type: object
         additionalProperties:
-          uniqueItems: false
           type: array
           items:
             type: string
@@ -2434,4 +2404,4 @@ definitions:
         type: string
       invoiceId:
         type: string
-tags: []
+securityDefinitions: {}
