@@ -2,6 +2,7 @@ swagger: '2.0'
 info:
   version: v1
   title: PayAPI
+  description: "LykkePay public API to provide customers the out-of-the-box functionality for their \nclients to make payments in BTC, ETH and other assets depending on customer needs.\n\n# Allowed HTTPs requests:\n- **POST** : To create resource \r\n- **PUT** : To update resource\r\n- **GET** : To get a resource or list of resources\r\n- **DELETE** : To delete resource\r\n\r\n# Description Of Usual Server Responses:\r\n- 200 `OK` - the request was successful (some API calls may return 201 instead).\r\n- 201 `Created` - the request was successful and a resource was created.\r\n- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).\r\n- 400 `Bad Request` - the request could not be understood or was missing required parameters.\r\n- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.\r\n- 403 `Forbidden` - access denied.\r\n- 404 `Not Found` - resource was not found."
 host: pay-api-test.lykkex.net
 basePath: /
 paths:
@@ -9,13 +10,12 @@ paths:
     get:
       tags:
         - Assets
-      summary: Returns list of settlement assets available for merchant
+      summary: Get settlement assets
+      description: Return list of settlement assets available for merchant
       operationId: GetSettlementAssets
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Lykke-Merchant-Id
           in: header
@@ -29,7 +29,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Success
+          description: List of settlement assets
           schema:
             $ref: '#/definitions/AssetsResponseModel'
         '500':
@@ -42,9 +42,7 @@ paths:
       operationId: GetPaymentAssets
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: settlementAssetId
           in: path
@@ -76,9 +74,7 @@ paths:
       operationId: GetCashoutAssets
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -104,9 +100,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -136,9 +130,7 @@ paths:
       operationId: GetRate
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: baseAssetId
           in: path
@@ -180,9 +172,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -216,9 +206,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -248,9 +236,7 @@ paths:
       operationId: History
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -276,9 +262,7 @@ paths:
       operationId: HistoryDetails
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: id
           in: query
@@ -308,9 +292,7 @@ paths:
       operationId: InvoiceLatestPaymentDetails
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: invoiceId
           in: query
@@ -336,9 +318,7 @@ paths:
       operationId: InvoicesGetMineByFilter
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: clientMerchantIds
           in: query
@@ -421,18 +401,17 @@ paths:
     get:
       tags:
         - Invoices
-      summary: Returns invoices by filter
+      summary: Get incoming invoices
+      description: Return the invoices by filter which should be paid by me.
       operationId: InvoicesGetInboxByFilter
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: clientMerchantIds
           in: query
           description: >-
-            The merchant ids of the clients (e.g.
+            [Optional] The merchant ids of the clients (e.g.
             ?clientMerchantIds=one&amp;clientMerchantIds=two)
           required: false
           type: array
@@ -441,7 +420,7 @@ paths:
           collectionFormat: multi
         - name: statuses
           in: query
-          description: The statuses (e.g. ?statuses=one&amp;statuses=two)
+          description: '[Optional] The statuses (e.g. ?statuses=one&amp;statuses=two)'
           required: false
           type: array
           items:
@@ -449,13 +428,13 @@ paths:
           collectionFormat: multi
         - name: dispute
           in: query
-          description: The dispute attribute
+          description: '[Optional] The dispute attribute'
           required: false
           type: boolean
         - name: billingCategories
           in: query
           description: >-
-            The billing categories (e.g.
+            [Optional] The billing categories (e.g.
             ?billingCategories=one&amp;billingCategories=two)
           required: false
           type: array
@@ -465,7 +444,7 @@ paths:
         - name: settlementAssets
           in: query
           description: >-
-            The settlement assets (e.g.
+            [Optional] The settlement assets (e.g.
             ?settlementAssets=one&amp;settlementAssets=two)
           required: false
           type: array
@@ -474,13 +453,13 @@ paths:
           collectionFormat: multi
         - name: greaterThan
           in: query
-          description: The greater than number for filtering (can be fractional)
+          description: '[Optional] The greater than number for filtering (can be fractional)'
           required: false
           type: number
           format: double
         - name: lessThan
           in: query
-          description: The less than number for filtering (can be fractional)
+          description: '[Optional] The less than number for filtering (can be fractional)'
           required: false
           type: number
           format: double
@@ -514,9 +493,7 @@ paths:
       operationId: GetFilterForCurrentMerchant
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -550,9 +527,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: model
           in: body
@@ -588,9 +563,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: model
           in: body
@@ -622,9 +595,7 @@ paths:
       operationId: GetMyInvoicesMarkedDispute
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -654,9 +625,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: model
           in: body
@@ -688,9 +657,7 @@ paths:
       operationId: GetSumToPayInvoices
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: invoicesIds
           in: query
@@ -723,12 +690,11 @@ paths:
       tags:
         - IsAlive
       summary: Checks service is alive
+      description: Return the liveness status of the service
       operationId: IsAlive
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: api-version
           in: query
@@ -753,9 +719,7 @@ paths:
       operationId: GetAvailableMerchantsForBilling
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -778,9 +742,7 @@ paths:
       operationId: GetCurrentUserInfo
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -804,9 +766,7 @@ paths:
       operationId: GetBaseAssetList
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: Authorization
           in: header
@@ -836,9 +796,7 @@ paths:
       operationId: SetBaseAsset
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: baseAsset
           in: query
@@ -874,9 +832,7 @@ paths:
       operationId: GetMerchantWalletConvertedBalances
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: convertAssetId
           in: query
@@ -919,9 +875,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -958,9 +912,7 @@ paths:
       operationId: GetPaymentRequestStatus
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: paymentRequestId
           in: path
@@ -996,9 +948,7 @@ paths:
       operationId: Refund
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: paymentRequestId
           in: path
@@ -1036,9 +986,7 @@ paths:
       operationId: GetCallback
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: paymentRequestId
           in: path
@@ -1072,9 +1020,7 @@ paths:
       operationId: SetCallback
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: paymentRequestId
           in: path
@@ -1113,9 +1059,7 @@ paths:
       operationId: GetAssetPairRates
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: assetPairId
           in: path
@@ -1155,9 +1099,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -1186,9 +1128,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -1222,9 +1162,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -1256,9 +1194,7 @@ paths:
         - text/json
         - application/*+json
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: request
           in: body
@@ -1287,9 +1223,7 @@ paths:
       operationId: Create
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: InvoiceNumber
           in: query
@@ -1360,9 +1294,7 @@ paths:
       operationId: Status
       consumes: []
       produces:
-        - text/plain
         - application/json
-        - text/json
       parameters:
         - name: InvoiceNumber
           in: query
