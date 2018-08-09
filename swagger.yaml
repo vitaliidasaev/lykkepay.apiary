@@ -143,10 +143,7 @@ paths:
       description: Execute cashout request for current merchant.
       operationId: Execute
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -223,10 +220,7 @@ paths:
       description: Execute exchange operation for current merchant.
       operationId: Execute
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -261,10 +255,7 @@ paths:
       description: Check whether exchange is possible.
       operationId: PreExchange
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -608,10 +599,7 @@ paths:
       summary: Mark dispute
       operationId: MarkDispute
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -647,10 +635,7 @@ paths:
       summary: Cancel dispute
       operationId: CancelDispute
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -717,10 +702,7 @@ paths:
       description: Pay one or multiple invoices with certain amount.
       operationId: PayInvoices
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -994,10 +976,7 @@ paths:
       summary: Create payment request and order
       operationId: CreatePaymentRequest
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -1240,10 +1219,7 @@ paths:
       summary: Authenticate user
       operationId: Auth
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -1270,10 +1246,7 @@ paths:
       summary: Update password
       operationId: UpdatePassword
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -1307,10 +1280,7 @@ paths:
       summary: Update pin
       operationId: UpdatePin
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
@@ -1343,10 +1313,7 @@ paths:
       description: Check if pin code is valid
       operationId: ValidatePin
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
       produces:
         - application/json
       parameters:
