@@ -40,14 +40,16 @@ info:
     - 403 `Forbidden` - access denied.
 
     - 404 `Not Found` - resource was not found.
-host: pay-api-test.lykkex.net
+host: pay-api-dev.lykkex.net
+schemes:
+  - https
 paths:
   /api/v1/assets/settlement:
     get:
       tags:
         - Assets
       summary: Get settlement assets
-      description: "Receive list of settlement assets available for merchant.\r\nExample:\r\n[ \"Asset1\", \"Asset2\", \"Asset3\" ]"
+      description: "Receive list of settlement assets available for merchant."
       operationId: GetSettlementAssets
       consumes: []
       produces:
@@ -70,8 +72,6 @@ paths:
             $ref: '#/definitions/AssetsResponseModel'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     x-summary: Settlement assets
   '/api/v1/assets/payment/{settlementAssetId}':
     get:
@@ -106,8 +106,6 @@ paths:
             $ref: '#/definitions/AssetsResponseModel'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     x-summary: Payment assets
   /api/v1/mobile/assets/cashout:
     get:
@@ -464,8 +462,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: Server Error
     x-summary: My invoices
   /api/v1/mobile/invoices/inbox:
     get:
@@ -555,8 +551,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: Server Error
     x-summary: Incoming invoices
   /api/v1/mobile/invoices/filter:
     get:
@@ -589,8 +583,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: Server Error
     x-summary: Filter
   /api/v1/mobile/invoices/dispute/mark:
     post:
@@ -1007,8 +999,6 @@ paths:
             $ref: '#/definitions/PaymentErrorResponseModel'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     x-summary: Create
   '/api/v1/paymentRequest/{paymentRequestId}/status':
     get:
@@ -1047,8 +1037,6 @@ paths:
             $ref: '#/definitions/PaymentErrorResponseModel'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     x-summary: Status
   '/api/v1/paymentRequest/{paymentRequestId}/refund':
     post:
@@ -1129,8 +1117,6 @@ paths:
             $ref: '#/definitions/PaymentErrorResponseModel'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     post:
       tags:
         - PaymentRequest
@@ -1170,8 +1156,6 @@ paths:
             $ref: '#/definitions/PaymentErrorResponseModel'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     x-summary: Callback
   '/api/v1/rates/{assetPairId}':
     get:
@@ -1209,8 +1193,6 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
     x-summary: Asset pair rate
   /api/v1/mobile/auth:
     post:
@@ -1412,10 +1394,6 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
     x-summary: Create invoice
   /api/v1/wooCommerce/status:
     post:
@@ -1489,10 +1467,6 @@ paths:
             $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
-        '500':
-          description: Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
     x-summary: Invoice status
 definitions:
   AssetsResponseModel:
