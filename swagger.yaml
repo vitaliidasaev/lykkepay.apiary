@@ -40,7 +40,7 @@ info:
     - 403 `Forbidden` - access denied.
 
     - 404 `Not Found` - resource was not found.
-host: pay-api-dev.lykkex.net
+host: pay-api-test.lykkex.net
 schemes:
   - https
 paths:
@@ -73,6 +73,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Settlement assets
+    x-description: >-
+     Put description with markdown here
   '/api/v1/assets/payment/{settlementAssetId}':
     get:
       tags:
@@ -115,6 +117,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Payment assets
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/assets/cashout:
     get:
       tags:
@@ -141,6 +145,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Cashout assets
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/cashout:
     post:
       tags:
@@ -176,6 +182,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Execute cashout
+    x-description: >-
+     Put description with markdown here
   '/api/v1/mobile/exchange/GetRate/{baseAssetId}/{quotingAssetId}':
     get:
       tags:
@@ -218,6 +226,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Exchange rate
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/exchange/Execute:
     post:
       tags:
@@ -253,6 +263,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Execute exchange
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/exchange/PreExchange:
     post:
       tags:
@@ -288,6 +300,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: PreExchange
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/history/Index:
     get:
       tags:
@@ -318,6 +332,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: History
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/history/Details:
     get:
       tags:
@@ -352,6 +368,8 @@ paths:
         '404':
           description: History operation is not found.
     x-summary: History details
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/history/InvoiceLatestPaymentDetails:
     get:
       tags:
@@ -382,6 +400,8 @@ paths:
         '404':
           description: History operation is not found.
     x-summary: Latest payment details
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/mine:
     get:
       tags:
@@ -471,6 +491,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: My invoices
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/inbox:
     get:
       tags:
@@ -560,6 +582,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Incoming invoices
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/filter:
     get:
       tags:
@@ -592,6 +616,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Filter
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/dispute/mark:
     post:
       tags:
@@ -628,6 +654,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Mark dispute
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/dispute/cancel:
     post:
       tags:
@@ -664,6 +692,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Cancel dispute
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/dispute/list:
     get:
       tags:
@@ -694,6 +724,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Dispute invoices
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/pay:
     post:
       tags:
@@ -729,6 +761,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Pay invoices
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/invoices/sum:
     get:
       tags:
@@ -769,6 +803,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Sum to pay
+    x-description: >-
+     Put description with markdown here
   /api/isAlive:
     get:
       tags:
@@ -796,6 +832,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Is alive
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/billing/availableMerchants:
     get:
       tags:
@@ -824,6 +862,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Available merchants
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/user:
     get:
       tags:
@@ -852,6 +892,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: User info
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/baseAsset/list:
     get:
       tags:
@@ -886,6 +928,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Base asset list
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/baseAsset:
     post:
       tags:
@@ -924,6 +968,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Set base asset
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/merchantWallets:
     get:
       tags:
@@ -969,6 +1015,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Balances
+    x-description: >-
+     Put description with markdown here
   /api/v1/paymentRequest:
     post:
       tags:
@@ -1008,6 +1056,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Create
+    x-description: >-
+     Put description with markdown here
   '/api/v1/paymentRequest/{paymentRequestId}/status':
     get:
       tags:
@@ -1046,6 +1096,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Status
+    x-description: >-
+     Put description with markdown here
   '/api/v1/paymentRequest/{paymentRequestId}/refund':
     post:
       tags:
@@ -1088,6 +1140,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Refund
+    x-description: >-
+     Put description with markdown here
   '/api/v1/paymentRequest/{paymentRequestId}/callback':
     get:
       tags:
@@ -1167,6 +1221,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Callback
+    x-description: >-
+     Put description with markdown here
   '/api/v1/rates/{assetPairId}':
     get:
       tags:
@@ -1204,6 +1260,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Asset pair rate
+    x-description: >-
+     Put description with markdown here
   '/api/v1/rates/volatility/{assetPairId}':
     get:
       tags:
@@ -1247,6 +1305,8 @@ paths:
         '500':
           description: Server Error
     x-summary: Volatility
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/auth:
     post:
       tags:
@@ -1274,6 +1334,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     x-summary: Authenticate
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/password:
     post:
       tags:
@@ -1308,6 +1370,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Update password
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/pin:
     post:
       tags:
@@ -1340,6 +1404,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Update pin
+    x-description: >-
+     Put description with markdown here
   /api/v1/mobile/pin/validation:
     post:
       tags:
@@ -1375,6 +1441,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Validate pin
+    x-description: >-
+     Put description with markdown here
   /api/v1/wooCommerce/create:
     post:
       tags:
@@ -1448,6 +1516,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Create invoice
+    x-description: >-
+     Put description with markdown here
   /api/v1/wooCommerce/status:
     post:
       tags:
@@ -1521,6 +1591,8 @@ paths:
         '401':
           description: Unauthorized
     x-summary: Invoice status
+    x-description: >-
+     Put description with markdown here
 definitions:
   AssetsResponseModel:
     required:
